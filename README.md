@@ -5,12 +5,12 @@ This repository contains Python scripts designed to automate the extraction, pro
 
 ### Scripts
 
-#### 1. Download and Consolidate Financial Data (`financial_data_downloader.py`)
+#### 1. Download and Consolidate Financial Data (`main.py`)
 - **Functionality**: This script automates the download of CSV files from specified URLs using Selenium, reads stock symbols from these files, and consolidates the data into a unified Excel output file (`common_stocks.xlsx`).
 - **Dependencies**: Requires Python 3.x with libraries including `selenium`, `pandas`, and `openpyxl`. Ensure Chrome WebDriver is installed and compatible with Selenium.
 - **Usage**: Modify the `url1`, `url2`, and `download_directory` variables within the script to specify the URLs and download directory. Execute the script to download, consolidate, and save the data.
 
-#### 2. Analyze and Generate Trading Signals (`financial_analysis.py`)
+#### 2. Analyze and Generate Trading Signals (`swingtrading.py`)
 - **Functionality**: This script processes CSV files containing insider trading data (`CF-Insider`), shareholding patterns (`CF-Shareholding`), SAST regulations (`CF-SAST-Reg`), and pledged data (`CF-SAST-Pledged`). It calculates key metrics, evaluates conditions based on predefined criteria, and generates trading signals.
 - **Dependencies**: Requires Python 3.x with libraries including `pandas`, `numpy`, and `datetime`.
 - **Usage**: Place the required CSV files (`CF-Insider.csv`, `CF-Shareholding.csv`, `CF-SAST-Reg.csv`, `CF-SAST-Pledged.csv`, and `EQUITY_L.csv`) in the script's working directory. Execute the script to analyze the data and generate an Excel report (`swing_trading_output.xlsx`) with trading signals and analyzed metrics.
