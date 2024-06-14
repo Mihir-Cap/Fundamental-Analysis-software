@@ -201,6 +201,7 @@ def lookup_name(symbol, lookup_df):
 
 
 # Called by lambda
+# Called by lambda
 def get_value(mode, symbol, insider_df):
     # Get the dataframe that represents purchasing and selling data for this particular symbol
     # We need this whether we're doing purchase or sales
@@ -217,14 +218,19 @@ def get_value(mode, symbol, insider_df):
     symbol_df['VALUE OF SECURITY (ACQUIRED/DISPLOSED)'] = symbol_df['VALUE OF SECURITY (ACQUIRED/DISPLOSED)'].astype(float)
 
     # Filter only for promoters and promoter group
-    symbol_df = symbol_df[symbol_df['CATEGORY OF PERSON'].isin(['Promoters', 'Promoter Group'])]
+    symbol_df = symbol_df[(symbol_df['CATEGORY OF PERSON'] == 'Promoter') | (symbol_df['CATEGORY OF PERSON'] == 'Promoter Group')]
 
-    # If we just want the quantity, return the quantity
-    if mode.find('qty') >= 0:
-        return symbol_df.sum(axis=0, skipna=True)['NO. OF SECURITIES (ACQUIRED/DISPLOSED)']
-    # If we want the average, calc the average and return it
-    elif mode.find('avg') >= 0:
-        return symbol_df.sum(axis=0, skipna=True)['VALUE OF SECURITY (ACQUIRED/DISPLOSED)'] / symbol_df.sum(axis=0, skipna=True)['NO. OF SECURITIES (ACQUIRED/DISPLOSED)']
+    # Calculate the desired value based on the mode
+    if mode == 'selling_qty':
+        value = symbol_df['NO. OF SECURITIES (ACQUIRED/DISPLOSED)'].sum()
+    elif mode == 'selling_avg':
+        value = symbol_df['VALUE OF SECURITY (ACQUIRED/DISPLOSED)'].mean()
+    elif mode == 'purchase_qty':
+        value = symbol_df['NO. OF SECURITIES (ACQUIRED/DISPLOSED)'].sum()
+    elif mode == 'purchase_avg':
+        value = symbol_df['VALUE OF SECURITY (ACQUIRED/DISPLOSED)'].mean()
+
+    return value
 
 
 # Responsible for checking the working directory for all the necessary files needed to run the process
